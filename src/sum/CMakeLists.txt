@@ -11,7 +11,8 @@ target_include_directories(
   ${target_name}
   PUBLIC
     ${PROJECT_SOURCE_DIR}/src
-    ${PROJECT_SOURCE_DIR}/build/release/_deps/cli11-src/include
+    ${PROJECT_SOURCE_DIR}/external/cli11
+
 )
 
 target_link_libraries(
