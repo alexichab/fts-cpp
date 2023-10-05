@@ -1,4 +1,4 @@
-#include "libsum.hpp"
+#include <libsum.hpp>
 
 namespace sum {
 double sum(const double a, const double b) { return a + b; }
