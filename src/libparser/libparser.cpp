@@ -4,14 +4,16 @@
 #include <cctype>
 #include <cstddef>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
-// size_t вместо int min,max
-//
+
+
 namespace parser {
 
 std::string clearString(const std::string &first) {
     std::string result;
+    result.reserve(first.size());
     for (const char c : first) {
         if (std::ispunct(c) == 0) {
             result.push_back(static_cast<char>(std::tolower(c)));
@@ -19,18 +21,15 @@ std::string clearString(const std::string &first) {
     }
     return result;
 }
-// string stream
+
 VectorOfStrings splitString(const std::string &str, const char delimiter) {
-    std::vector<std::string> result;
-    std::size_t start = 0;
-    std::size_t end = str.find(delimiter);
-    while (end != std::string::npos) {
-        result.push_back(str.substr(start, end - start));
-        start = end + 1;
-        end = str.find(delimiter, start);
-    }
-    result.push_back(str.substr(start, end - start));
-    return result;
+  VectorOfStrings result;
+  std::istringstream ss(str);
+  std::string token;
+  while (std::getline(ss,token,delimiter)){
+    result.push_back(token);
+  }
+  return result;
 }
 
 VectorOfStrings removeStopWords(const VectorOfStrings &words,
