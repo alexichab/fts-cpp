@@ -45,8 +45,8 @@ TEST(GenerateNgrams, General) {
 TEST(Parse, General){
     const std::string input("Vector, not.");
     const VectorOfStrings stopwords{"not"};
-    const int min = 3;
-    const int max = 6;
+    const size_t min = 3;
+    const size_t max = 6;
     const VectorOfNgrams result = parser::parse(input,stopwords,min,max);
     const VectorOfNgrams vctr{{"vec", 0},{"vect", 0},{"vecto", 0},{"vector",0}};
     for(std::size_t i = 0; i < result.size(); ++i){
