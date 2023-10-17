@@ -24,7 +24,7 @@ Checks: >
   -bugprone-exception-escape,
   -readability-redundant-string-init
 WarningsAsErrors: '*'
-HeaderFilterRegex: '(libsum|libparser|parser|sum)/'
+HeaderFilterRegex: 'include/(fts)'
 AnalyzeTemporaryDtors: false
 FormatStyle:     none
 User:            alexeynaumov
