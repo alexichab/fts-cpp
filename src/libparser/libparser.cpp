@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-
 namespace parser {
 
 std::string clearString(const std::string &first) {
@@ -23,13 +22,13 @@ std::string clearString(const std::string &first) {
 }
 
 VectorOfStrings splitString(const std::string &str, const char delimiter) {
-  VectorOfStrings result;
-  std::istringstream ss(str);
-  std::string token;
-  while (std::getline(ss,token,delimiter)){
-    result.push_back(token);
-  }
-  return result;
+    VectorOfStrings result;
+    std::istringstream ss(str);
+    std::string token;
+    while (std::getline(ss, token, delimiter)) {
+        result.push_back(token);
+    }
+    return result;
 }
 
 VectorOfStrings removeStopWords(const VectorOfStrings &words,
@@ -50,7 +49,8 @@ VectorOfNgrams ngramGen(const VectorOfStrings &words,
     VectorOfNgrams result;
     for (std::size_t i = 0; i < words.size(); ++i) {
         for (size_t currLen = min;
-             (currLen <= max) && (currLen <= static_cast<size_t>(words[i].size()));
+             (currLen <= max) &&
+             (currLen <= static_cast<size_t>(words[i].size()));
              ++currLen) {
             const std::string ngram = words[i].substr(0, currLen);
             if (std::find(stopwords.begin(), stopwords.end(), ngram) ==
