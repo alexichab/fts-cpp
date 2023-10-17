@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-//size_t вместо int min,max
+// size_t вместо int min,max
 //
 namespace parser {
 
@@ -19,7 +19,7 @@ std::string clearString(const std::string &first) {
     }
     return result;
 }
-//string stream
+// string stream
 VectorOfStrings splitString(const std::string &str, const char delimiter) {
     std::vector<std::string> result;
     std::size_t start = 0;
@@ -46,7 +46,8 @@ VectorOfStrings removeStopWords(const VectorOfStrings &words,
 }
 
 VectorOfNgrams ngramGen(const VectorOfStrings &words,
-                        const VectorOfStrings &stopwords, size_t min, size_t max) {
+                        const VectorOfStrings &stopwords, size_t min,
+                        size_t max) {
     VectorOfNgrams result;
     for (std::size_t i = 0; i < words.size(); ++i) {
         for (size_t currLen = min;
@@ -63,7 +64,7 @@ VectorOfNgrams ngramGen(const VectorOfStrings &words,
 }
 
 VectorOfNgrams parse(const std::string &query, const VectorOfStrings &stopwords,
-                     int min, int max) {
+                     size_t min, size_t max) {
     const VectorOfStrings words =
         removeStopWords(splitString(clearString(query)), stopwords);
     return ngramGen(words, stopwords, min, max);
@@ -76,4 +77,4 @@ void printNgrams(const VectorOfNgrams &ngrams) {
     std::cout << '\n';
 }
 
-}
+} // namespace parser

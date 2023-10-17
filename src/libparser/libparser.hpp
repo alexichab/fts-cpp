@@ -18,9 +18,10 @@ VectorOfStrings splitString(const std::string &str, const char delimiter = ' ');
 VectorOfStrings removeStopWords(const VectorOfStrings &words,
                                 const VectorOfStrings &stopwords);
 VectorOfNgrams ngramGen(const VectorOfStrings &words,
-                        const VectorOfStrings &stopwords, size_t min, size_t max);
+                        const VectorOfStrings &stopwords, size_t min,
+                        size_t max);
 VectorOfNgrams parse(const std::string &query, const VectorOfStrings &stopwords,
-                     int min, int max);
+                     size_t min, size_t max);
 void printNgrams(const VectorOfNgrams &ngrams);
 
-}
+} // namespace parser
