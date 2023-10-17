@@ -51,7 +51,7 @@ VectorOfNgrams ngramGen(const VectorOfStrings &words,
     VectorOfNgrams result;
     for (std::size_t i = 0; i < words.size(); ++i) {
         for (size_t currLen = min;
-             (currLen <= max) && (currLen <= static_cast<int>(words[i].size()));
+             (currLen <= max) && (currLen <= static_cast<size_t>(words[i].size()));
              ++currLen) {
             const std::string ngram = words[i].substr(0, currLen);
             if (std::find(stopwords.begin(), stopwords.end(), ngram) ==
