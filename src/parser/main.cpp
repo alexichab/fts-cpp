@@ -8,11 +8,11 @@ int main() {
     std::string words;
     std::getline(std::cin, words);
 
-    VectorOfStrings stop_words;
+    StopWords stop_words;
     std::string stopword;
     std::cout << "Enter stop words, push q for end\n";
     while (std::getline(std::cin, stopword) && stopword != "q") {
-        stop_words.push_back(stopword);
+        stop_words.insert(stopword);
     }
 
     int min;

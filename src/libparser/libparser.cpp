@@ -6,7 +6,6 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <vector>
 
 namespace parser {
 
@@ -30,13 +29,12 @@ VectorOfStrings splitString(const std::string &str, char delimiter) {
     }
     return result;
 }
-// hashtable
+
 VectorOfStrings removeStopWords(const VectorOfStrings &words,
-                                const VectorOfStrings &stopwords) {
+                                const StopWords &stopwords) {
     VectorOfStrings result;
     for (const auto &word : words) {
-        if (std::find(stopwords.begin(), stopwords.end(), word) ==
-            stopwords.end()) {
+        if (stopwords.count(word) == 0) {
             result.push_back(word);
         }
     }
@@ -44,8 +42,7 @@ VectorOfStrings removeStopWords(const VectorOfStrings &words,
 }
 
 VectorOfNgrams ngramGen(const VectorOfStrings &words,
-                        const VectorOfStrings &stopwords, size_t min,
-                        size_t max) {
+                        const StopWords &stopwords, size_t min, size_t max) {
     VectorOfNgrams result;
     for (std::size_t i = 0; i < words.size(); ++i) {
         for (size_t currLen = min;
@@ -62,7 +59,7 @@ VectorOfNgrams ngramGen(const VectorOfStrings &words,
     return result;
 }
 
-VectorOfNgrams parse(const std::string &query, const VectorOfStrings &stopwords,
+VectorOfNgrams parse(const std::string &query, const StopWords &stopwords,
                      size_t min, size_t max) {
     const VectorOfStrings words =
         removeStopWords(splitString(clearString(query)), stopwords);

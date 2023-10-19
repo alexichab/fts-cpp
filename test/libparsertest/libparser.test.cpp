@@ -21,7 +21,7 @@ TEST(SplitStringTest, General) {
 
 TEST(RemoveStopWordsTest, General) {
     const VectorOfStrings input{"parser", "is", "did", "not", "work"};
-    const VectorOfStrings stopwords{"not"};
+    const StopWords stopwords{"not"};
     const VectorOfStrings vctr{"parser", "is", "did", "work"};
     const VectorOfStrings result = parser::removeStopWords(input, stopwords);
     for (std::size_t i = 0; i < result.size(); ++i) {
@@ -31,7 +31,7 @@ TEST(RemoveStopWordsTest, General) {
 
 TEST(GenerateNgrams, General) {
     const VectorOfStrings input{"vector"};
-    const VectorOfStrings stopwords{"not"};
+    const StopWords stopwords{"not"};
     const size_t min = 3;
     const size_t max = 6;
     const VectorOfNgrams result = parser::ngramGen(input, stopwords, min, max);
@@ -45,7 +45,7 @@ TEST(GenerateNgrams, General) {
 
 TEST(Parse, General) {
     const std::string input("Vector, not.");
-    const VectorOfStrings stopwords{"not"};
+    const StopWords stopwords{"not"};
     const size_t min = 3;
     const size_t max = 6;
     const VectorOfNgrams result = parser::parse(input, stopwords, min, max);
