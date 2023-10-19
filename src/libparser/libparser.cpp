@@ -34,7 +34,7 @@ VectorOfStrings removeStopWords(const VectorOfStrings &words,
                                 const StopWords &stopwords) {
     VectorOfStrings result;
     for (const auto &word : words) {
-        if (stopwords.find(word) != stopwords.end()) {
+        if (stopwords.find(word) == stopwords.end()) {
             result.push_back(word);
         }
     }
