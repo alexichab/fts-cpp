@@ -14,7 +14,7 @@ using VectorOfStrings = std::vector<std::string>;
 namespace parser {
 
 std::string clearString(const std::string &first);
-VectorOfStrings splitString(const std::string &str, const char delimiter = ' ');
+VectorOfStrings splitString(const std::string &str, char delimiter = ' ');
 VectorOfStrings removeStopWords(const VectorOfStrings &words,
                                 const VectorOfStrings &stopwords);
 VectorOfNgrams ngramGen(const VectorOfStrings &words,

@@ -21,7 +21,7 @@ std::string clearString(const std::string &first) {
     return result;
 }
 
-VectorOfStrings splitString(const std::string &str, const char delimiter) {
+VectorOfStrings splitString(const std::string &str, char delimiter) {
     VectorOfStrings result;
     std::istringstream ss(str);
     std::string token;
@@ -30,7 +30,7 @@ VectorOfStrings splitString(const std::string &str, const char delimiter) {
     }
     return result;
 }
-
+// hashtable
 VectorOfStrings removeStopWords(const VectorOfStrings &words,
                                 const VectorOfStrings &stopwords) {
     VectorOfStrings result;
