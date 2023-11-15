@@ -1,2 +1,3 @@
 add_subdirectory(libsum)
 add_subdirectory(libparsertest)
+add_subdirectory(libindex)
