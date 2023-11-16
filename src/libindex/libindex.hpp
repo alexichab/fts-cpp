@@ -8,6 +8,7 @@
 struct DocToPos {
     std::size_t doc;
     std::size_t pos;
+    DocToPos(std::size_t d, std::size_t p) : doc(d), pos(p) {}
 };
 
 struct Index {

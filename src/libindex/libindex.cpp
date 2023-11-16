@@ -21,7 +21,7 @@ void IndexBuilder::add_document(
     index_.docs[id] = text;
     auto ngrams = parser::parse(text, stop_words, min, max);
     for (const auto &ngram : ngrams) {
-        index_.entries[ngram.text].push_back({id, ngram.pos});
+        index_.entries[ngram.text].emplace_back(static_cast<std::size_t>(id),static_cast<std::size_t> (ngram.pos));
     }
 }
 
@@ -66,7 +66,7 @@ convert_to_entry_output(const std::string &term,
         }
     }
     output.append("\n");
-    return output;
+    return output;//append!
 }
 
 void write_entries(
