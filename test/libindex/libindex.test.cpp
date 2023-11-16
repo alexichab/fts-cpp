@@ -15,7 +15,7 @@ class IndexBuilderTest : public ::testing::Test {
 
 // Test case for add_document function
 TEST_F(IndexBuilderTest, AddDocument) {
-    std::unordered_set<std::string> stop_words = {"a", "an", "the"};
+    const std::unordered_set<std::string> stop_words = {"a", "an", "the"};
     builder.add_document(1, "This is a sample text", stop_words, 2, 4);
 
     // Add assertions here to check if the document is added to the index
