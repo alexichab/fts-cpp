@@ -66,7 +66,7 @@ convert_to_entry_output(const std::string &term,
         }
     }
     output.append("\n");
-    return output;//append!
+    return output;//append!пофиксить вывод в файл
 }
 
 void write_entries(
