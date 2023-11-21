@@ -21,7 +21,8 @@ void IndexBuilder::add_document(
     index_.docs[id] = text;
     auto ngrams = parser::parse(text, stop_words, min, max);
     for (const auto &ngram : ngrams) {
-        index_.entries[ngram.text].emplace_back(static_cast<std::size_t>(id),static_cast<std::size_t> (ngram.pos));
+        index_.entries[ngram.text].emplace_back(
+            static_cast<std::size_t>(id), static_cast<std::size_t>(ngram.pos));
     }
 }
 
@@ -47,11 +48,10 @@ void write_docs(const std::string &path,
     }
 }
 
-std::string
-convert_to_entry_output(const std::string &term,
-                        const std::vector<DocToPos> &doc_to_pos_vec) {
-    std::string output(term + ' ' + std::to_string(doc_to_pos_vec.size()) +
-                       ' ');
+void convert_to_entry_output(const std::string &term,
+                             const std::vector<DocToPos> &doc_to_pos_vec,
+                             std::ofstream &out_file) {
+    out_file << term << ' ' << doc_to_pos_vec.size() << ' ';
     std::unordered_map<std::size_t, std::pair<int, std::vector<int>>> doc_info;
     for (const auto &doc_to_pos : doc_to_pos_vec) {
         doc_info[doc_to_pos.doc].first++;
@@ -59,14 +59,12 @@ convert_to_entry_output(const std::string &term,
             static_cast<int>(doc_to_pos.pos));
     }
     for (const auto &[id, pos_info] : doc_info) {
-        output.append(std::to_string(id) + ' ' +
-                      std::to_string(pos_info.first) + ' ');
+        out_file << id << ' ' << pos_info.first << ' ';
         for (const auto &pos : pos_info.second) {
-            output.append(std::to_string(pos) + ' ');
+            out_file << pos << ' ';
         }
     }
-    output.append("\n");
-    return output;//append!пофиксить вывод в файл
+    out_file << '\n';
 }
 
 void write_entries(
@@ -76,7 +74,7 @@ void write_entries(
         const std::filesystem::path filePath =
             path + "/index/entries/" + ::hash_term(term);
         std::ofstream out_file(filePath.string());
-        out_file << convert_to_entry_output(term, doc_to_pos_vec);
+        convert_to_entry_output(term, doc_to_pos_vec, out_file);
     }
 }
 
