@@ -2,7 +2,7 @@
 
 #include <picosha2.h>
 
-#include "../config/config.hpp"
+#include <config/config.hpp>
 #include <libparser.hpp>
 
 #include <algorithm>
