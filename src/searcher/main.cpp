@@ -8,7 +8,7 @@ int main() {
     const TextIndexAccessor indexAccessor(indexPath);
     const std::string query = "sample";
     std::cout << "Total docs: " << indexAccessor.total_docs() << '\n';
-    std::cout << "ID\tDocument\t\t\t\tScore\n";
+    std::cout << "ID\tDocument\t\t\tScore\n";
     const Results results = searcher::search(query, indexAccessor);
     for (const auto &result : results) {
         const auto id = result.doc_id;
