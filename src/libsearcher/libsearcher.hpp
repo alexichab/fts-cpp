@@ -3,25 +3,30 @@
 #include <picosha2.h>
 
 #include <config/config.hpp>
-#include <libparser.hpp>
+#include <libparser/libparser.hpp>
+#include <libsearcher/libsearcher.hpp>
 
 #include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <fcntl.h>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <stdexcept>
 #include <string>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
 struct Result {
     std::size_t doc_id;
     double score;
+    Result(std::size_t doc_id, double score) : doc_id(doc_id), score(score){};
 };
 using Result = struct Result;
 using Results = std::vector<Result>;

@@ -1,26 +1,13 @@
 #include <picosha2.h>
 
-#include <config/config.hpp>
-#include <libparser/libparser.hpp>
 #include <libsearcher/libsearcher.hpp>
-
-#include <algorithm>
-#include <cmath>
-#include <cstddef>
-#include <filesystem>
-#include <fstream>
-#include <map>
-#include <stdexcept>
-#include <string>
-#include <vector>
-
-constexpr auto IDX_DOESNT_CONTAIN = "!!";
 
 TermInfos TextIndexAccessor::get_term_infos(const std::string &term) const {
     const std::string hash = picosha2::hash256_hex_string(term).substr(0, 6);
     const std::filesystem::path fullPath = path_ / "index" / "entries" / hash;
     if (!std::filesystem::exists(fullPath)) {
-        return IDX_DOESNT_CONTAIN;
+        throw std::runtime_error(std::string("Can't find path: ") +
+                                 fullPath.c_str());
     }
     std::ifstream termFile(fullPath);
     if (!termFile.is_open()) {
@@ -59,22 +46,19 @@ DocsCount TextIndexAccessor::total_docs() const {
 }
 
 Results searcher::search(const SearcherQuery &query, const IndexAccessor &ia) {
-    // const parser::VectorOfNgrams parser;
     const Config cfg = ia.config();
-    const VectorOfNgrams parsed =
-        // parser::parse(query, cfg.stop_words, cfg.min_length, cfg.max_length);
-        parser::parse(query,
-                      StopWords(cfg.stop_words.begin(), cfg.stop_words.end()),
-                      cfg.min_length, cfg.max_length);
-    std::map<std::size_t, double> scores;
+    const VectorOfNgrams parsed = parser::parse(
+        query, StopWords(cfg.stop_words.begin(), cfg.stop_words.end()),
+        cfg.min_length, cfg.max_length);
+    std::unordered_map<std::size_t, double> scores;
     for (const auto &ngram : parsed) {
         const TermInfos termInfos = ia.get_term_infos(ngram.text);
-        if (termInfos == IDX_DOESNT_CONTAIN) {
-            continue;
-        }
+
         std::vector<std::string> words = parser::splitString(termInfos);
-        const double doc_frequency = std::stod(words[1]);
-        for (std::size_t i = 2; i < words.size() - 1; ++i) {
+        const int doc_freq_pos = 1;
+        const int doc_id_count = 2;
+        const double doc_frequency = std::stod(words[doc_freq_pos]);
+        for (std::size_t i = doc_id_count; i < words.size() - 1; ++i) {
             auto doc_id = static_cast<std::size_t>(std::stoi(words[i]));
             ++i;
             const double term_frequency = std::stod(words[i]);
@@ -86,8 +70,8 @@ Results searcher::search(const SearcherQuery &query, const IndexAccessor &ia) {
         }
     }
     Results results;
-    for (auto &score : scores) {
-        results.push_back({score.first, score.second});
+    for (auto &[doc_id, tf_idf] : scores) {
+        results.emplace_back(doc_id, tf_idf);
     }
     auto compare_desc_by_score = [](const Result &a, const Result &b) {
         return a.score > b.score;
