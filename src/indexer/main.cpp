@@ -9,9 +9,9 @@ int main() {
 
     const std::unordered_set<std::string> stopWords = {"the", "and", "is"};
 
-    indexBuilder.add_document(1, "This is a sample document", stopWords, 2, 4);
+    indexBuilder.add_document(1, "This is a sample document", stopWords, 2, 8);
     indexBuilder.add_document(2, "Another document with some text", stopWords,
-                              2, 4);
+                              2, 8);
 
     const Index index = indexBuilder.index();
 
