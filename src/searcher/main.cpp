@@ -4,7 +4,7 @@
 #include <string>
 
 int main() {
-    std::filesystem::path indexPath = "path/to/output";
+    std::filesystem::path indexPath = "path/to/output/";
     const TextIndexAccessor indexAccessor(indexPath);
     const std::string query = "sample";
     std::cout << "Total docs: " << indexAccessor.total_docs() << '\n';
